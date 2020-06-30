@@ -1,0 +1,30 @@
+Web Scraper: Python - Beautiful Soup
+Databases: Postgres
+Sentiment Analysis: n/a
+Similarity Ranking: Tensorflow
+
+Postgres:
+DB Name: ca_climbs
+Users:
+	boulder_user
+	route_user
+Tables:
+	ca_boulders: name, grade, rating, style, angle, lat, lon, url, location
+
+STYLE:
+1. dyno - dyno, toss, jump, throw
+2. crack - crack, fist, offwidth, off-width, jam, splitter, fingerlock, ringlock
+3. traverse - traverse, traverses
+4. steep - steep, roof, overhang, overhanging, cave
+5. technical - technical, slab, crimp, razor, insecure, stem, friction, thin
+6. mantle - mantle, mantling, beach, beached, whale
+7. face (default)
+
+ANGLE:
+1. slab - slab, friction
+2. overhanging - overhang, overhung, roof, cave, steep
+3. vertical - vertical 
+
+SETTINGS:
+Rock - all types - 5.4+ - 2+ stars - broken by area
+Boulder - V0+ - broken by area

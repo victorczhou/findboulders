@@ -1,0 +1,5 @@
+# removing install dependencies
+
+get-pip.py	# python updates
+*.exe 		# install postgres, py 3.8.3, new git (with credential manager)
+

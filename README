@@ -11,7 +11,7 @@ Users:
 	boulder_user
 	route_user
 Tables:
-	ca_boulders: name, grade, rating, style, angle, lat, lon, url, location
+	ca_boulders: name, grade, rating, style, angle, lat, lon, url, location, risk
 
 STYLE:
 1. dyno - dyno, toss, jump, throw

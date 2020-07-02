@@ -3,6 +3,7 @@ import psycopg2			# postgres
 import os			# file searching
 import csv			# parsing files
 import re 			# regex for MP csv
+from bs4 import BeautifulSoup 	# parse HTML
 
 hostname = "localhost"
 username = "boulder_user"
@@ -23,14 +24,26 @@ def parse_grade(gradestring):
 			return -1
 
 def parse_risk(gradestring):
-	if re.search("PG13", gradestring) or re.search("PG-13", gradestring):
+	if "PG13" in gradestring or "PG-13" in gradestring:
 		return "PG13"
-	if re.search("R", gradestring):
+	if "R" in gradestring:
 		return "R"
-	if re.search("X", gradestring):
+	if "X" in gradestring:
 		return "X"
 	else:
 		return "G"
+
+dyno_words = ["dyno", "toss", "jump", "throw"]
+crack_words = ["crack", "fist", "offwidth", "off-width", "jam", "splitter", "fingerlock", "ringlock"]
+traverse_words = ["traverse", "traversing"]
+steep_words = ["steep", "roof", "overhang", "cave"]
+technical_words = ["technical", "slab", "crimp", "razor", "insecure", "stem", "friction", "thin", "balance", "micro", "tiny", "blank"]
+mantle_words = ["mantle", "mantling", "beach", "beached", "whale"]
+
+def parse_style(description):
+	d
+
+def parse_angle(description):
 
 conn = psycopg2.connect(host=hostname, user=username, password=password, dbname=database)
 cur = conn.cursor()
@@ -39,7 +52,7 @@ boulder_dir = os.getcwd()+dir_extension
 files = []
 for (dirpath, dirnames, filenames) in os.walk(boulder_dir):
 	for filename in filenames:
-		if re.search("^route-finder.*\.csv", filename):
+		if re.search('^route-finder.*\.csv', filename):
 			files.append(filename)
 		else:
 			print("Warning: csv file many not be correctly formatted: ", filename)
@@ -60,6 +73,19 @@ for file in files[:1]:
 			holdstyle = "face"
 			holdangle = "overhanging"
 			holdlocation = "California"	# parse later not sorting by area
+
+			if "Traverse" in row[0]:
+				holdstyle = "traverse"
+			else:
+				page = requests.get(url) 	# MP has static HTML
+				soup = BeautifulSoup(page.content, 'html.parser')
+				desc_element = soup.find('div', class_='fr-view') 	# MP has two <div class="fr-view"> for desc and location, respectively
+				if desc_element is None:
+					print("Error: cannot find description for climb ", row[0], ".")
+				else:
+					holdstyle = parse_style(desc_element.text.strip())
+					holdangle = parse_angle(desc_element.text.strip())
+				
 
 			cur.execute("INSERT INTO ca_boulders (name, grade, rating, climb_style, climb_angle, lat, lon, url, location, climb_risk) \
 				VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s);", \

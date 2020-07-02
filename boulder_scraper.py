@@ -90,7 +90,7 @@ for (dirpath, dirnames, filenames) in os.walk(boulder_dir):
 
 for file in files:
 	file_ext = os.getcwd()+dir_extension+file
-	with open(file_ext, 'r') as csvfile:
+	with open(file_ext, 'r', encoding='utf-8') as csvfile:
 		csvreader = csv.reader(csvfile)
 		next(csvreader)				# skips the first row of formatting
 		for row in csvreader:

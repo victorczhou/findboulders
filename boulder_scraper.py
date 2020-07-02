@@ -112,11 +112,11 @@ for file in files:
 				desc_element = soup.find('div', class_='fr-view') 	# MP has two <div class="fr-view"> for desc and location, respectively
 				if desc_element is None:
 					print("Error: cannot find description for climb ", row[0], ".")
+					continue
 				else:
 					holdstyle = parse_style(desc_element.text.strip())
 					holdangle = parse_angle(desc_element.text.strip())
 				
-
 			cur.execute("INSERT INTO ca_boulders (name, grade, rating, climb_style, climb_angle, lat, lon, url, location, climb_risk) \
 				VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s);", \
 				(row[0], grade, row[3], holdstyle, holdangle, row[9], row[10], url, holdlocation, risk))

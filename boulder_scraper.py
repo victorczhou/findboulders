@@ -36,14 +36,44 @@ def parse_risk(gradestring):
 dyno_words = ["dyno", "toss", "jump", "throw"]
 crack_words = ["crack", "fist", "offwidth", "off-width", "jam", "splitter", "fingerlock", "ringlock"]
 traverse_words = ["traverse", "traversing"]
-steep_words = ["steep", "roof", "overhang", "cave"]
+steep_words = ["steep", "roof", "overhang", "overhung", "cave"]
 technical_words = ["technical", "slab", "crimp", "razor", "insecure", "stem", "friction", "thin", "balance", "micro", "tiny", "blank"]
 mantle_words = ["mantle", "mantling", "beach", "beached", "whale"]
 
+slab_words = ["slab", "friction"]
+# overhang_words is the same as steep_words
+vertical_words = ["vertical"]
+
 def parse_style(description):
-	d
+	for word in dyno_words:
+		if word in description:
+			return "dyno"
+	for word in crack_words:
+		if word in description:
+			return "crack"
+	for word in traverse_words:
+		if word in description:
+			if re.match("[Ll]eft", description) and re.match("[Rr]ight", description):
+				return "traverse"
+	for word in steep_words:
+		if word in description:
+			return "steep"
+	for word in technical_words:
+		if word in description:
+			return "technical"
+	for word in mantle_words:
+		if word in description:
+			return "mantle"
+	return "face"
 
 def parse_angle(description):
+	for word in slab_words:
+		if word in description:
+			return "slab"
+	for word in steep_words:
+		if word in description:
+			holda = "overhang"
+	return "vertical"
 
 conn = psycopg2.connect(host=hostname, user=username, password=password, dbname=database)
 cur = conn.cursor()

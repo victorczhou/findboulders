@@ -12,7 +12,7 @@ database = "ca_climbs"
 dir_extension = "/boulders/"	# change this if your directory with csv is in different location/name
 
 def parse_grade(gradestring):
-	if gradestring == "V-easy":
+	if  "V-easy" in gradestring:
 		return 0
 	else:
 		holdmatch = re.search("V[0-9]+", gradestring)

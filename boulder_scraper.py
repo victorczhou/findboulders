@@ -88,7 +88,7 @@ for (dirpath, dirnames, filenames) in os.walk(boulder_dir):
 			print("Warning: csv file many not be correctly formatted: ", filename)
 	break
 
-for file in files[:1]:
+for file in files:
 	file_ext = os.getcwd()+dir_extension+file
 	with open(file_ext, 'r') as csvfile:
 		csvreader = csv.reader(csvfile)

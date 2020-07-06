@@ -51,7 +51,7 @@ with open(file_ext, 'r', encoding='utf-8') as csvfile:
 			continue
 		else:
 			desc = desc_element.text.strip()
-			print(row[0], " ", grade)
+			print(row[0], " V", grade)
 			print("STYLE: dyno, crack, traverse, steep, technical, mantle, face")
 			while holdstyle not in styles:
 				holdstyle = input()

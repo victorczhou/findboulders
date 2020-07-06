@@ -8,7 +8,7 @@ from bs4 import BeautifulSoup 	# parse HTML
 hostname = "localhost"
 username = "boulder_user"
 password = "boulders"
-database = "boulder_training"
+database = "ca_climbs"
 trainingfile = "bishop_3star.csv"
 
 styles = ["dyno", "crack", "traverse", "steep", "technical", "mantle", "face"]

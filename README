@@ -1,7 +1,7 @@
 GITHUB: https://github.com/victorczhou/findboulders.git
 
 Required installs:
-pip3: psychopg2, beautifulsoup4, tensorflow
+pip3: psycopg2, beautifulsoup4, tensorflow
 Postgres (12.3-1)
 
 Web Scraper: Python - Beautiful Soup

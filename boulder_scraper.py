@@ -72,7 +72,7 @@ def parse_angle(description):
 			return "slab"
 	for word in steep_words:
 		if word in description:
-			holda = "overhang"
+			holda = "overhanging"
 	return "vertical"
 
 conn = psycopg2.connect(host=hostname, user=username, password=password, dbname=database)

@@ -10,10 +10,10 @@ conn = psycopg2.connect(host=hostname, user=username, password=password, dbname=
 cur = conn.cursor()
 
 filename = "boulder_training.csv"
-pre = "'SELECT name, grade, climb_angle, climb_style, description FROM boulder_training'"
-copymsg = "COPY ({0}) TO STDOUT".format(s)
+pre = "SELECT name, grade, climb_angle, climb_style, description FROM boulder_training"
+copymsg = "COPY ({0}) TO STDOUT".format(pre)
 
-with open(filename, "w") as file:
+with open(filename, "w", encoding='utf-8') as file:
     cur.copy_expert(copymsg, file)
 
 conn.close()

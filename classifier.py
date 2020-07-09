@@ -7,14 +7,14 @@ def clean_text(text):
     # remove HTML tags
     text = re.sub(r'<.*?>', '', text)
     
-    # remove the characters [\], ['] and ["] and ascii 0x91-0x94
+    # remove the characters [\], ['] and ["] and 0x91-0x94
     text = re.sub(r"\\", "", text)    
     text = re.sub(r"\'", "", text)    
     text = re.sub(r"\"", "", text)
-    text = re.sub(b"<0x91>", "", text) 
-    text = re.sub(b"<0x92>", "", text) 
-    text = re.sub(b"<0x93>", "", text)
-    text = re.sub(b"<0x94>", "", text)    
+    text = re.sub(r"", "", text) 
+    text = re.sub(r"", "", text) 
+    text = re.sub(r"", "", text)
+    text = re.sub(r"", "", text)
     
     # convert text to lowercase
     text = text.strip().lower()

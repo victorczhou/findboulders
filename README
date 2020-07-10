@@ -1,18 +1,13 @@
 GITHUB: https://github.com/victorczhou/findboulders.git
 
 Required installs:
-pip3: psycopg2, beautifulsoup4, tensorflow, pandas, nltk
+pip3: psycopg2, beautifulsoup4, //tensorflow//, pandas, nltk, scikit-learn
 Postgres (12.3-1)
-
-Web Scraper: Python - Beautiful Soup
-Databases: Postgres
-Sentiment Analysis: n/a
-Similarity Ranking: Tensorflow
 
 Postgres:
 DB Name: ca_climbs
 Users:
-	boulder_user
+	boulder_user - password: boulders
 	route_user
 Tables:
 	ca_boulders: name, grade, rating, style, angle, lat, lon, url, location, risk
@@ -35,3 +30,8 @@ ANGLE:
 SETTINGS:
 Rock - all types - 5.4+ - 2+ stars - broken by area		// TODO
 Boulder - V0 and up - broken by area
+
+ML Algorithms:
+1. Naive Bayes (tf-idf vectorization)
+2. Linear SVM
+3. Logistic Regression

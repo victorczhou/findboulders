@@ -9,7 +9,7 @@ hostname = "localhost"
 username = "boulder_user"
 password = "boulders"
 database = "ca_climbs"
-trainingfile = "/training/leavenworth_3star.csv"
+trainingfile = "/training/hueco_3star.csv"
 
 styles = ["dyno", "crack", "traverse", "steep", "technical", "mantle", "face"]
 angles = ["slab", "overhanging", "vertical"]

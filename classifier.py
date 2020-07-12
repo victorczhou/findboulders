@@ -72,7 +72,7 @@ def log_reg(x_train, x_test, y_train, y_test):
 
 	logreg = Pipeline([("vect", CountVectorizer()),
 	                ("tfidf", TfidfTransformer()),
-	                ("clf", LogisticRegression(n_jobs=1, C=1e4, max_iter=100)),
+	                ("clf", LogisticRegression(n_jobs=1, C=90000, max_iter=80)),
 	               ])
 	logreg.fit(x_train, y_train)
 	y_pred = logreg.predict(x_test)
@@ -80,12 +80,13 @@ def log_reg(x_train, x_test, y_train, y_test):
 	print("LogReg Accuracy %s" % accuracy_score(y_pred, y_test))
 	print(classification_report(y_test, y_pred, target_names=styles))
 
+
 df = pd.read_csv(filename)
 df["description"] = df["description"].apply(clean_text)
 x = df.description		# i think
 y = df.climb_style
-x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.3, random_state=0)
+x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.3, random_state=10)
 
-#naive_bayes(x_train, x_test, y_train, y_test)
+naive_bayes(x_train, x_test, y_train, y_test)
 linear_svm(x_train, x_test, y_train, y_test)
-#log_reg(x_train, x_test, y_train, y_test)
+log_reg(x_train, x_test, y_train, y_test)

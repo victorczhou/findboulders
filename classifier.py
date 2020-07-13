@@ -59,7 +59,7 @@ def linear_svm(x_train, x_test, y_train, y_test):
 
 	sgd = Pipeline([("vect", CountVectorizer()),
 	                ("tfidf", TfidfTransformer()),
-	                ("clf", SGDClassifier(alpha=.001, max_iter=10, random_state=1)), # hinge loss, l2 reg
+	                ("clf", SGDClassifier(alpha=.00175, max_iter=15, random_state=5)), # hinge loss, l2 reg
 	               ])
 	sgd.fit(x_train, y_train)
 	y_pred = sgd.predict(x_test)
@@ -87,6 +87,6 @@ x = df.description		# i think
 y = df.climb_style
 x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.3, random_state=10)
 
-naive_bayes(x_train, x_test, y_train, y_test)
+#naive_bayes(x_train, x_test, y_train, y_test)
 linear_svm(x_train, x_test, y_train, y_test)
 log_reg(x_train, x_test, y_train, y_test)

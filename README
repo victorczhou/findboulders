@@ -1,7 +1,7 @@
 GITHUB: https://github.com/victorczhou/findboulders.git
 
 Required installs:
-pip3: psycopg2, beautifulsoup4, pandas, nltk, scikit-learn, tensorflow (keras)
+pip3: psycopg2, beautifulsoup4, pandas, nltk, scikit-learn, tensorflow (keras) + tensorflow_hub
 Postgres (12.3-1)
 
 Postgres:

@@ -1,7 +1,7 @@
 GITHUB: https://github.com/victorczhou/findboulders.git
 
 Required installs:
-pip3: psycopg2, beautifulsoup4, //tensorflow//, pandas, nltk, scikit-learn
+pip3: psycopg2, beautifulsoup4, pandas, nltk, scikit-learn, tensorflow (keras)
 Postgres (12.3-1)
 
 Postgres:
@@ -13,7 +13,7 @@ Tables:
 	ca_boulders: name, grade, rating, style, angle, lat, lon, url, location, risk
 	boulder_training: name, grade, style, angle, desc, url
 
-STYLE: 		# NOTE: keywords defunct
+STYLE: 		# NOTE: keywords defunct, using ML for classification
 1. dyno - dyno, toss, jump, throw
 2. crack - crack, fist, offwidth, off-width, jam, splitter, fingerlock, ringlock
 3. traverse - traverse, traversing + (left, right) OR traverse in name
@@ -36,3 +36,4 @@ ML Algorithms:
 1. Naive Bayes (tf-idf vectorization) - poor performance
 2. Linear SVM - .679
 3. Logistic Regression - .647
+4. Neural network - 

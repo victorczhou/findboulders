@@ -9,6 +9,10 @@ from sklearn.metrics import accuracy_score
 from sklearn.metrics import classification_report
 from sklearn.pipeline import Pipeline
 from sklearn.feature_extraction.text import TfidfTransformer
+import tensorflow as tf
+import tensorflow_hub as hub
+from keras.models import Sequential
+from keras import layers
 
 filename = "boulder_training.csv"
 styles = ["dyno", "crack", "traverse", "steep", "technical", "mantle", "face"]
@@ -80,13 +84,40 @@ def log_reg(x_train, x_test, y_train, y_test):
 	print("LogReg Accuracy %s" % accuracy_score(y_pred, y_test))
 	print(classification_report(y_test, y_pred, target_names=styles))
 
+def neural_net(x_train, x_test, y_train, y_test):
+	# todo: add pretrained model
+	pretrained = "https://tfhub.dev/google/tf2-preview/gnews-swivel-20dim-with-oov/1"		# words not in vocabulary
+	hub_layer = hub.KerasLayer(pretrained, output_shape=[20], input_shape=[], 
+                           dtype=tf.string, trainable=True)
+	hub_layer(x_train[:3])
+
+	#model = Sequential([
+	#		layers.Dense(32, activation="relu", input_shape=[]),		# tune hyperparameter
+	#		layers.Dense(7)		# 7 classes
+	#	])
+	model = Sequential()
+	model.add(hub_layer)
+	model.add(layers.Dense(32, activation='relu'))
+	model.add(layers.Dense(10))
+
+	model.compile(optimizer='adam',
+              loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True), 	# mutually exclusive
+              metrics=['accuracy'])
+	model.summary()
+	#model.fit(x_train, y_train, validation_data=(x_test, y_test), epochs=10, batch_size=10, verbose=1)
+	#result = model.evaluate(x_test, y_test, verbose=2)
+	#print("Keras Accuracy: \n%s", result)
+
+
 
 df = pd.read_csv(filename)
 df["description"] = df["description"].apply(clean_text)
+df.info()
 x = df.description		# i think
 y = df.climb_style
 x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.3, random_state=10)
 
 #naive_bayes(x_train, x_test, y_train, y_test)
-linear_svm(x_train, x_test, y_train, y_test)
-log_reg(x_train, x_test, y_train, y_test)
+#linear_svm(x_train, x_test, y_train, y_test)
+#log_reg(x_train, x_test, y_train, y_test)
+neural_net(x_train, x_test, y_train, y_test)

@@ -85,28 +85,28 @@ def log_reg(x_train, x_test, y_train, y_test):
 	print(classification_report(y_test, y_pred, target_names=styles))
 
 def neural_net(x_train, x_test, y_train, y_test):
-	# todo: add pretrained model
-	pretrained = "https://tfhub.dev/google/tf2-preview/gnews-swivel-20dim-with-oov/1"		# words not in vocabulary
-	hub_layer = hub.KerasLayer(pretrained, output_shape=[20], input_shape=[], 
-                           dtype=tf.string, trainable=True)
-	hub_layer(x_train[:3])
+	vectorizer = CountVectorizer()
+	vectorizer.fit(x_train)
+	xvec_train = vectorizer.transform(x_train)
+	xvec_test = vectorizer.transform(x_test)
 
-	#model = Sequential([
-	#		layers.Dense(32, activation="relu", input_shape=[]),		# tune hyperparameter
-	#		layers.Dense(7)		# 7 classes
-	#	])
+	# todo: add pretrained model
+	#pretrained = "https://tfhub.dev/google/tf2-preview/gnews-swivel-20dim-with-oov/1"		# oov words not in vocabulary
+	#hub_layer = hub.KerasLayer(pretrained, output_shape=[20], input_shape=[], 
+    #                       dtype=tf.string, trainable=True)
+
 	model = Sequential()
-	model.add(hub_layer)
-	model.add(layers.Dense(32, activation='relu'))
-	model.add(layers.Dense(10))
+	#model.add(hub_layer)
+	model.add(layers.Dense(32, activation='relu', input_dim=xvec_train.shape[1]))			# tune node hyperparameter
+	model.add(layers.Dense(7)) 																# 7 classes
 
 	model.compile(optimizer='adam',
               loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True), 	# mutually exclusive
               metrics=['accuracy'])
 	model.summary()
-	#model.fit(x_train, y_train, validation_data=(x_test, y_test), epochs=10, batch_size=10, verbose=1)
-	#result = model.evaluate(x_test, y_test, verbose=2)
-	#print("Keras Accuracy: \n%s", result)
+	model.fit(xvec_train, y_train, validation_data=(xvec_test, y_test), epochs=5, batch_size=10, verbose=1)
+	result = model.evaluate(x_test, y_test, verbose=2)
+	print("Keras Accuracy: \n%s", result)
 
 
 
@@ -120,4 +120,4 @@ x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.3, random_
 #naive_bayes(x_train, x_test, y_train, y_test)
 #linear_svm(x_train, x_test, y_train, y_test)
 #log_reg(x_train, x_test, y_train, y_test)
-neural_net(x_train, x_test, y_train, y_test)
+#neural_net(x_train, x_test, y_train, y_test)

@@ -100,7 +100,7 @@ def neural_net(x_train, x_test, y_train, y_test):
 		for style in styles:
 			hold.append(ston[style])
 		return hold
-
+'''
 	def num_to_style(nums):
 		ntos = {
 			0 : "dyno",
@@ -115,13 +115,11 @@ def neural_net(x_train, x_test, y_train, y_test):
 		for num in nums:
 			hold.append(ntos[num])
 		return hold
-
+'''
 	vectorizer = CountVectorizer()
 	vectorizer.fit(x_train)
 	xvec_train = vectorizer.transform(x_train)
 	xvec_test = vectorizer.transform(x_test)
-	#print(vectorizer.vocabulary_)
-	#print(xvec_train.shape)
 
 	y_test_nums = np.array(style_to_num(y_test))
 	y_train_nums = np.array(style_to_num(y_train))
@@ -131,14 +129,24 @@ def neural_net(x_train, x_test, y_train, y_test):
 	model.add(layers.Dense(32, activation='relu', input_dim=xvec_train.shape[1]))			# tune node hyperparameter - not much diff
 	model.add(layers.Dense(7)) 																# 7 classes
 
-	model.compile(optimizer='adam',
-              loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True), 	# mutually exclusive
+	model.compile(optimizer='adam', loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True), 	# mutually exclusive
               metrics=['accuracy'])
-	model.summary()
+	#model.summary()
 	model.fit(xvec_train, y_train_nums, validation_data=(xvec_test, y_test_nums), epochs=20, batch_size=10, verbose=1)
 	result = model.evaluate(xvec_test, y_test_nums, verbose=2)
 	print("Keras Loss, Accuracy: ", result)
 
+	pretrained = "https://tfhub.dev/google/tf2-preview/gnews-swivel-20dim-with-oov/1"		# oov words not in vocabulary
+	hub_layer = hub.KerasLayer(pretrained, output_shape=[20], input_shape=[], 
+                           dtype=tf.string, trainable=True)
+	model2 = Sequential()
+	model2.add(hub_layer)
+	model2.add(layers.Dense(32, activation='relu', input_dim=xvec_train.shape[1]))
+	model2.add(layers.Dense(7))
+	model2.compile(optimizer='adam', loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True), metrics=['accuracy'])
+	model2.fit(xvec_train, y_train_nums, validation_data=(xvec_test, y_test_nums), epochs=20, batch_size=10, verbose=1)
+	result = model2.evaluate(xvec_test, y_test_nums, verbose=2)
+	print("Keras Loss, Accuracy: (pretrained)", result)
 
 
 df = pd.read_csv(filename)

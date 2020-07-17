@@ -34,6 +34,6 @@ Training - V0 and up - 3+ stars - broken by area
 
 ML Algorithms:
 1. Naive Bayes (tf-idf vectorization) - poor performance
-2. Linear SVM - .679
+2. Linear SVM - .679 [BEST]
 3. Logistic Regression - .647
-4. Neural network - 
+4. Neural network - ~.61 raw, ~.55 pretrained (on unrelated corpus)
